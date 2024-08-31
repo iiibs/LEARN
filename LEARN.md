@@ -12,10 +12,18 @@ A program that trains a neural network player, which learns\
 
 ## Neural network
  Input layer: a board state\
- Three hidden layers: each of them with n_neurons
+ Three hidden layers: each of them contains n_neurons number of neurons\
+ Output layer: a probability distribution for the cells of the board.
+
+## Players
+ Neural player uses the trained neural network and choose\
+  the maximal value from its output.\
+ Perfect player uses a human created perfect algorithm for optimal play.\
+ Random player plays all of its moves randomly.\
+ Human player is someone who enters the moves during the game.
 
 ## Training
- n_number of sample games are played between Perfect and Random players.\
+ n_number number of sample games are played between Perfect and Random players.\
  The neural network will be trained on this training set of games, and\
   the Neural player will use this trained neural network.
 
