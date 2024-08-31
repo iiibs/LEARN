@@ -1,0 +1,48 @@
+{
+ "details": true,
+ "games": [
+  {
+   "id": 0,
+   "name": "tic-tac-toe",
+   "empty_cell_symbol": "-",
+   "n_rows": 3,
+   "n_cols": 3,
+   "expected_as_first": 0.5
+  },
+  {
+   "id": 1,
+   "name": "OXXO",
+   "empty_cell_symbol": "-",
+   "n_rows": 1,
+   "n_cols": 4,
+   "expected_as_first": 1.0
+  }
+ ],
+ "gameid": 0,
+ "game": {
+  "name": "OXXO",
+  "empty_cell_symbol": "-",
+  "n_rows": 1,
+  "n_cols": 4,
+  "expected_points_as_first": 1.0
+ },
+ "teach": {
+  "n_steps": 1,
+  "f": {
+   "z": 0,
+   "max_z": 0
+  }
+ },
+ "train": {
+  "new": true,
+  "n_games": 100,
+  "n_neurons": 5,
+  "win_value": 1.0,
+  "draw_value": 0.5,
+  "loss_value": 0.0,
+  "n_trains": 2
+ },
+ "evaluate": {
+  "n_games": 10
+ }
+}
