@@ -4,7 +4,7 @@ A program that trains a neural network player, which learns\
 
 ## Games
  The well known tic-tac-toe game and the very simple OXXO game.\
- Both players have draw strategy.
+ In tic-tac-toe both players have draw strategy.
 
  OXXO is played on a 1 by 4 board, and the player who has\
  two consecutive symbols of their own is the winner.\
