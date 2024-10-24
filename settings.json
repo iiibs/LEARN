@@ -1,48 +1,57 @@
 {
- "details": true,
+ "details": false,
  "games": [
   {
    "id": 0,
    "name": "tic-tac-toe",
-   "empty_cell_symbol": "-",
    "n_rows": 3,
    "n_cols": 3,
-   "expected_as_first": 0.5
+   "expected_points_as_first": 0.5,
+   "simulate_games": 100000,
+   "train_neurons": 100
   },
   {
    "id": 1,
    "name": "OXXO",
-   "empty_cell_symbol": "-",
    "n_rows": 1,
    "n_cols": 4,
-   "expected_as_first": 1.0
+   "expected_points_as_first": 1.0,
+   "simulate_games": 195,
+   "train_neurons": 5
   }
  ],
  "gameid": 0,
  "game": {
-  "name": "OXXO",
-  "empty_cell_symbol": "-",
-  "n_rows": 1,
-  "n_cols": 4,
-  "expected_points_as_first": 1.0
+  "name": "tic-tac-toe",
+  "n_rows": 3,
+  "n_cols": 3,
+  "expected_points_as_first": 0.5
  },
- "teach": {
-  "n_steps": 1,
-  "f": {
-   "z": 0,
-   "max_z": 0
-  }
+ "simulate": {
+  "save_interval_seconds": 3600,
+  "n_games": 1000000,
+  "n_games_saved": 999646
  },
  "train": {
-  "new": true,
-  "n_games": 100,
-  "n_neurons": 5,
+  "save_interval_seconds": 3600,
+  "n_neurons": 20,
+  "n_epochs": 10,
   "win_value": 1.0,
   "draw_value": 0.5,
   "loss_value": 0.0,
-  "n_trains": 2
+  "n_epochs_saved": 10
+ },
+ "network": {
+  "learning_rate": 0.001,
+  "hearbeat_rate": 1
  },
  "evaluate": {
-  "n_games": 10
+  "n_games": 1000
+ },
+ "optimize": {
+  "min_games": 10,
+  "max_games": 1000,
+  "min_neurons": 4,
+  "max_neurons": 12
  }
 }

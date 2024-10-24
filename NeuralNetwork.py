@@ -25,6 +25,7 @@ class NeuralNetwork(nn.Module):
    self.best_filename='oxxo_nn_best.pth'
   self.device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
   self.to(self.device)
+  return
 
  def forward(self,x):
   x=self.relu(self.fc1(x))
@@ -33,24 +34,3 @@ class NeuralNetwork(nn.Module):
   x=self.relu(self.fc4(x))
   x=self.fc5(x)
   return x
-
-def train_model(model,training_data):
- criterion=nn.MSELoss()
- optimizer=optim.Adam(model.parameters(),lr=0.001)
- heartbeat_rate=config.n_epochs/10
- for epoch in range(config.n_epochs):
-  total_loss=0
-  for flat_input,flat_target in training_data:
-   input=torch.FloatTensor(flat_input).unsqueeze(0).to(model.device)
-   target=torch.FloatTensor(flat_target).unsqueeze(0).to(model.device)
-   optimizer.zero_grad()
-   output=model(input)
-   loss=criterion(output,target)
-   loss.backward()
-   optimizer.step()
-   total_loss+=loss.item()
-  if (epoch + 1) % heartbeat_rate == 0:
-   current_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-   if config.b_details:
-    print(f'{current_time} - Epoch {epoch + 1}, Loss: {total_loss / len(training_data):.2f}')
- return model

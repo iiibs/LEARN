@@ -8,7 +8,7 @@ class Game:
  def __init__(self,player1,player2):
   self.n_rows=config.settings["game"]["n_rows"]
   self.n_cols=config.settings["game"]["n_cols"]
-  self.empty_cell_symbol=config.settings["game"]["empty_cell_symbol"]
+  self.empty_cell_symbol=config.empty_cell_symbol
   self.board=Board(self.n_rows,self.n_cols)
   self.reset(player1,player2)
 

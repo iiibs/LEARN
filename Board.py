@@ -6,7 +6,7 @@ class Board:
  def __init__(self,n_rows,n_cols):
   self.n_rows=n_rows
   self.n_cols=n_cols
-  self.empty_cell_symbol=config.settings["game"]["empty_cell_symbol"]
+  self.empty_cell_symbol=config.empty_cell_symbol
   self.reset()
 
  def reset(self):

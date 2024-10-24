@@ -5,9 +5,8 @@ from PerfectPlayer import *
 from RandomPlayer import *
 from NeuralPlayer import *
 from HumanPlayer import *
-from MinimaxPlayer import *
 from Game import *
-from DataStorage import *
+from Simulate import *
 from NeuralNetwork import *
 
 class Evaluate:
@@ -17,23 +16,39 @@ class Evaluate:
   self.max_points=0
 
  def run(self):
+  current_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+  print(f'Evaluation started at: {current_time}')
+  print(f" with n_games= {self.n_games}")
   neural_player=NeuralPlayer(self.model)
   neural_player.model.load_state_dict(torch.load(self.model.filename))
   perfect_player=PerfectPlayer()
   random_player=RandomPlayer()
-  performance_neural_vs_perfect=round(100*self.calculate_performance(neural_player,perfect_player))
-  print(f"Neural player performance against perfect player was: {performance_neural_vs_perfect}%")
-  performance_neural_vs_random=round(100*self.calculate_performance(neural_player,random_player))
-  print(f"Neural player performance against random player was: {performance_neural_vs_random}%")
-  performance_perfect_vs_random=round(100*self.calculate_performance(perfect_player,random_player))
-  print(f"Perfect player performance against random player was: {performance_perfect_vs_random}%")
+  performance_neural_vs_perfect=round(100*self.run_games(neural_player,perfect_player))
+  if config.settings["details"]:
+   print(f"Neural player performance against perfect player was: {performance_neural_vs_perfect}%")
+  performance_neural_vs_random=round(100*self.run_games(neural_player,random_player))
+  if config.settings["details"]:
+   print(f"Neural player performance against random player was: {performance_neural_vs_random}%")
+  performance_perfect_vs_random=round(100*self.run_games(perfect_player,random_player))
+  if config.settings["details"]:
+   print(f"Perfect player performance against random player was: {performance_perfect_vs_random}%")
   performance={ \
    "performance_neural_vs_perfect":performance_neural_vs_perfect, \
    "performance_neural_vs_random":performance_neural_vs_random, \
    "performance_perfect_vs_random":performance_perfect_vs_random}
-  return performance
+  if config.settings["details"]:
+   print(performance)
+  performance_neural_vs_random_relative_to_perfect_vs_random= \
+   round(100*performance_neural_vs_random/performance_perfect_vs_random)
+  print(f" against perfect directly: {performance_neural_vs_perfect}% "+
+        f"against perfect via random: {performance_neural_vs_random_relative_to_perfect_vs_random}%")
+  b_success=performance_neural_vs_perfect>=100 and \
+            performance_neural_vs_random_relative_to_perfect_vs_random>=100
+  current_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+  print(f'Evaluation ended at: {current_time}')
+  return b_success
 
- def calculate_performance(self,player,evaluator):
+ def run_games(self,player,evaluator):
   if config.settings["game"]["name"]=="tic-tac-toe":
    game=TictactoeGame(player,evaluator)
   if config.settings["game"]["name"]=="OXXO":
@@ -45,23 +60,33 @@ class Evaluate:
    if game.first_player==player:
     firsts+=1
    if game.winner_symbol=='':
-    print("draw")
+    if config.settings["details"]:
+     print("draw")
     draws+=1
    if game.winner_symbol=='X':
-    print(f"{game.first_player} won with X.")
+    if config.settings["details"]:
+     print(f"{game.first_player} won with X.")
     if game.first_player==player:
      wins+=1
+     if game.first_player.name=="neural" and game.second_player.name=="perfect" or \
+        game.first_player.name=="perfect" and game.second_player.name=="neural":
+      print("Unexpected result.")
     else:
      losses+=1
    if game.winner_symbol=='O':
-    print(f"{game.second_player} won with O.")
+    if config.settings["details"]:
+     print(f"{game.second_player} won with O.")
     if game.second_player==player:
      wins+=1
+     if game.first_player.name=="neural" and game.second_player.name=="perfect" or \
+        game.first_player.name=="perfect" and game.second_player.name=="neural":
+      print("Unexpected result.")
     else:
      losses+=1
-  current_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-  print(f'{current_time}')
-  print(f"Player played as first in {firsts}/{self.n_games} games and won {wins}, tied {draws}, lost {losses}.")
+  if config.settings["details"]:
+   current_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+   print(f'{current_time}')
+   print(f"Player played as first in {firsts}/{self.n_games} games and won {wins}, tied {draws}, lost {losses}.")
   seconds=self.n_games-firsts
   expected_points_as_first=config.settings["game"]["expected_points_as_first"]
   expected_points_as_second=1.0-expected_points_as_first

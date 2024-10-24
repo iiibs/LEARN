@@ -23,7 +23,7 @@ A program that trains a neural network player, which learns\
  Human player is someone who enters the moves during the game.
 
 ## Training
- n_number number of sample games are played between Perfect and Random players.\
+ n_games number of sample games are played between Perfect and Random players.\
  The neural network will be trained on this training set of games, and\
   the Neural player will use this trained neural network.
 
@@ -32,6 +32,14 @@ A program that trains a neural network player, which learns\
   the Perfect player and the Random player.\
  If both results are as good as the results of the Perfect player, then\
  the evaluation is a success, otherwise it is a fail.
+
+## Optimization
+ An iterative approach is implemented to find the best (n_games,n_neuron)\
+  pair that can be used for training a perfect player.\
+ The algorithm will start from the given min and max values for the\
+  number of games and the number of neurons.\
+ This replaces the manual trials and errors to find the best fit values\
+  for the training.
 
 ## Test
  Human player can test the Neural player to get a human verification\

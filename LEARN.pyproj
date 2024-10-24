@@ -27,11 +27,12 @@
     <Compile Include="config.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataStorage.py">
+    <Compile Include="Simulate.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Evaluate.py" />
     <Compile Include="Game.py" />
+    <Compile Include="Optimize.py" />
     <Compile Include="Train.py">
       <SubType>Code</SubType>
     </Compile>
@@ -39,7 +40,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LEARN.py" />
-    <Compile Include="MinimaxPlayer.py" />
     <Compile Include="NeuralNetwork.py" />
     <Compile Include="NeuralPlayer.py" />
     <Compile Include="PerfectPlayer.py">
@@ -48,6 +48,10 @@
     <Compile Include="RandomPlayer.py">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LEARN.md" />
+    <Content Include="settings.json" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
